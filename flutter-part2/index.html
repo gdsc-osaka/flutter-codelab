@@ -1,0 +1,355 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Write your first Flutter app, part2</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid="UA-99999999-1"
+                  id="flutter-part2"
+                  title="Write your first Flutter app, part2"
+                  environment="web"
+                  feedback-link="https://github.com/gdsc-osaka/flutter-codelab/issues">
+    
+      <google-codelab-step label="Introduction" duration="0">
+        <p>Flutterは、GoogleのUIツールキットです。これは単一のコードベースからモバイル、ウェブ、デスクトップ向けのネイティブにコンパイルされた美しいアプリケーションを構築するためのツールです。Flutterは既存のコードと一緒に動作し、世界中の開発者や組織で使用されている、無料でオープンソースのプロダクトです。</p>
+<p>このコードラボでは、基本的なモバイルFlutterアプリを拡張して、インタラクティブ機能を追加します。また、ユーザーが移動できる2つ目のページ（ルートと呼びます）を作成します。最後に、アプリのテーマ（色）を変更します。このコードラボでは、パート1を拡張して<a href="https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1/?hl=ja" target="_blank">遅延読込される無限リストを作成します</a>が、パート2から始めたい方のために、開始コードを提供します。</p>
+<h2 is-upgraded><strong>パート2で学べること</strong></h2>
+<ul>
+<li>iOS、Android、Webで自然に見えるFlutterアプリの書き方</li>
+<li>ホットリロードで開発期間を短縮する方法</li>
+<li>Stateful widgetにインタラクティブ機能を追加する方法</li>
+<li>セカンドスクリーンの作成と移動方法</li>
+<li>テーマを使ってアプリの外観を変更する方法</li>
+</ul>
+<h2 is-upgraded><strong>パート2で作るもの</strong></h2>
+<p>まずは、あるスタートアップ企業のために、提案された名前のリストを無限に生成するシンプルなモバイルアプリから始めます。コードラボの終了時には、エンドユーザーが名前を選択・解除して、ベストなものを保存できるようになっています。アプリバーの右上にあるリストのアイコンをタップすると、お気に入りの名前だけがリストアップされた新しいページ（ルートと呼びます）に移動します。</p>
+<p>次のアニメーションGIFは、完成したアプリがどのように動作するかを示しています。</p>
+<p class="image-container"><img alt="7fcab088cd22cff7.gif" style="width: 454.00px" src="img\\71f492c779522abd.gif"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Get the starting app" duration="0">
+        <p>パート1を完了していない場合は、<a href="https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1/" target="_blank">Write your first Flutter app, part 1</a>の<a href="https://codelabs.developers.google.com/codelabs/first-flutter-app-pt1/%231" target="_blank">Set up your Flutter environment</a>を参照して、Flutter開発のための環境を整えてください。</p>
+<p>このコードラボのパート1を終えた方は、すでにスタートアップアプリであるstartup_namerを持っています。次のステップに進むことができます。</p>
+<p>startup_namerをお持ちでない方は、以下の手順で入手できますのでご安心ください。</p>
+<p>シンプルでテンプレート化されたFlutterアプリを作成します。startup_namerという名前のFlutterプロジェクトを作成し、以下のようにnull safetyに移行させます。</p>
+<pre>$ flutter create startup_namer
+$ cd startup_namer</pre>
+<p>ほとんどの場合、Dartのコードが格納されているlib/main.dartを編集します。</p>
+<p>lib/main.dartからすべてのコードを削除します。<a href="https://github.com/flutter/codelabs/blob/master/startup_namer_null_safety/step4_infinite_list/lib/main.dart" target="_blank">このファイル</a>のコードで置き換えると、提案されているスタートアップ名のリストが無限に、かつ遅延読込されて表示されます。</p>
+<p>english_words パッケージを追加するよう pubspec.yamlを更新します。</p>
+<pre>$ flutter pub add english_words
+Resolving dependencies...
+  async 2.8.1 (2.8.2 available)
+  characters 1.1.0 (1.2.0 available)
++ english_words 4.0.0
+  matcher 0.12.10 (0.12.11 available)
+  test_api 0.4.2 (0.4.5 available)
+  vector_math 2.1.0 (2.1.1 available)
+Changed 1 dependency!</pre>
+<p>english_words パッケージでは、ランダムな単語のペアを生成し、これをスタートアップの名前候補として使用します。</p>
+<p>アプリを起動します。</p>
+<p>好きなだけスクロールすると、スタートアップの名前の候補が次々と出てきます。</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Add icons to the list" duration="0">
+        <p>このステップでは、各行にハートのアイコンを追加します。次のステップでは、それらをタップできるようにして、お気に入りを保存します。</p>
+<p>_RandomWordsStateに_saved Setを追加します。この Set には、ユーザーが気に入った単語のペアが保存されます。適切に実装されたSet は、重複したエントリを許可しないため、ListよりもSetの方が好ましいです。</p>
+<pre>class _RandomWordsState extends State&lt;RandomWords&gt; {
+  final _suggestions = &lt;WordPair&gt;[];
+  final _saved = &lt;WordPair&gt;{};     // NEW
+  final _biggerFont = TextStyle(fontSize: 18);
+  ...
+}</pre>
+<p>ビルド関数で、単語のペアがすでにfavoritesに追加されていないことを確認するために、alreadySavedチェックを追加します。</p>
+<p>final index = i ~/ 2;</p>
+<p>if (index &gt;= _suggestions.length) {</p>
+<p>  _suggestions.addAll(generateWordPairs().take(10));</p>
+<p>}</p>
+<p>final alreadySaved = _saved.contains(_suggestions[index]); // NEW</p>
+<p> 以下のように、テキストの後にアイコンを追加します。</p>
+<p>return ListTile(</p>
+<p>  title: Text(</p>
+<p>    _suggestions[index].asPascalCase,</p>
+<p>    style: _biggerFont,</p>
+<p>  ),</p>
+<p>  trailing: Icon(    // NEW from here ...</p>
+<p>    alreadySaved ? Icons.favorite : Icons.favorite_border,</p>
+<p>    color: alreadySaved ? Colors.red : null,</p>
+<p>    semanticLabel: alreadySaved ? &#39;Remove from saved&#39; : &#39;Save&#39;,</p>
+<p>  ),</p>
+<p>);                   // to here.</p>
+<p>アプリをホットリロードします。</p>
+<p>これで、各行に白抜きのハートが表示されますが、まだ機能しません。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>Windows</p>
+</td><td colspan="1" rowspan="1"><p>iOS</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 172.00px" src="img\\b5c10224829b0920.png"></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 228.00px" src="img\\37b2e210a5e7147b.png"></p>
+</td></tr>
+</table>
+<p>問題がありましたか？</p>
+<p>アプリが正常に動作しない場合は、以下のリンクのコードを使って元に戻すことができます。</p>
+<ul>
+<li><a href="https://github.com/flutter/codelabs/blob/master/startup_namer/step5_add_icons/lib/main.dart" target="_blank">lib/main.dart</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Add interactivity" duration="0">
+        <p>このステップでは、ハートのアイコンをタップできるようにします。ユーザーがリストのエントリーをタップして、お気に入りの状態を切り替えると、その単語のペアが保存されたお気に入りのセットに追加されたり、削除されたりします。</p>
+<p>そのためには、_buildRow関数を修正します。単語エントリが既にお気に入りに追加されている場合、それを再度タップするとお気に入りから削除されます。タイルがタップされると、関数はsetState()を呼び出し、状態が変化したことをフレームワークに通知します。</p>
+<p>以下のように、ビルドメソッドにonTapを追加します。</p>
+<pre>return ListTile(
+  title: Text(
+    _suggestions[index].asPascalCase,
+    style: _biggerFont,
+  ),
+  trailing: Icon(
+    alreadySaved ? Icons.favorite : Icons.favorite_border,
+    color: alreadySaved ? Colors.red : null,
+    semanticLabel: alreadySaved ? &#39;Remove from saved&#39; : &#39;Save&#39;,
+  ),
+  onTap: () {          // NEW from here ...
+    setState(() {
+      if (alreadySaved) {
+        _saved.remove(_suggestions[index]);
+      } else {
+        _saved.add(_suggestions[index]);
+      }
+    });                // to here.
+  },
+);</pre>
+<aside class="special"><p><strong>ヒント</strong>: Flutterのリアクティブ・スタイル（反応型形式）フレームワークでは、<strong>setState()</strong>を呼び出すと、<strong>State</strong>オブジェクトの<strong>build()</strong>メソッドが呼び出され、UIが更新されることになります。</p>
+</aside>
+<p>アプリをホットリロードします。</p>
+<p>どのタイルをタップしても、そのエントリーをお気に入りに追加したり外したりできるはずです。タイルをタップすると、タップポイントからインクが飛び散るアニメーションが表示されます。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>Windows</p>
+</td><td colspan="1" rowspan="1"><p>iOS</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 231.00px" src="img\\bbf39299ec3a2774.png"></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 236.84px" src="img\\f6879987184aba3b.png"></p>
+</td></tr>
+</table>
+<p>問題がありましたか？</p>
+<p>アプリが正常に動作しない場合は、以下のリンクのコードを使って元に戻すことができます。</p>
+<ul>
+<li><a href="https://github.com/flutter/codelabs/blob/master/startup_namer/step6_add_interactivity/lib/main.dart" target="_blank">lib/main.dart</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Navigate to a new screen" duration="0">
+        <p>このステップでは、お気に入りを表示する新しいページ（Flutterではルートと呼びます）を追加します。ホームルートと新しいルートの間を移動する方法について学びます。</p>
+<p>Flutterでは、Navigatorがアプリのルートを含むスタックを管理します。ルートをNavigatorのスタックにプッシュすると、表示がそのルートに更新されます。ナビゲーターのスタックからルートをポップすると、ディスプレイは前のルートに戻ります。</p>
+<p>次に、_RandomWordsStateのビルドメソッドで、AppBarにリストアイコンを追加します。ユーザーがリストアイコンをクリックすると、保存されたお気に入りを含む新しいルートがナビゲータにプッシュされ、アイコンが表示されます。</p>
+<p>MyAppウィジェットからScaffoldを削除します。</p>
+<pre>class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(          // MODIFY with const
+      title: &#39;Startup Name Generator&#39;,
+      home: RandomWords(),             // REMOVE Scaffold
+    );
+  }</pre>
+<p>Scaffoldは_RandomWordsStateに再登場することになります。これにより、アプリケーションの状態と相互作用するIconButtonをScaffoldのAppBarに追加することができるようになります。</p>
+<p>ListView.builderをMyAppのScaffoldでラップし、_RandomWordsStateクラスのbuildメソッドで、AppBarのactionsパラメータにIconButtonを追加します。</p>
+<p>class _RandomWordsState extends State&lt;RandomWords&gt; {</p>
+<p>  ...</p>
+<p>  @override</p>
+<p>  Widget build(BuildContext context) {</p>
+<p>    return Scaffold(   // NEW from here ...</p>
+<p>      appBar: AppBar(  </p>
+<p>        title: const Text(&#39;Startup Name Generator&#39;),</p>
+<p>        actions: [</p>
+<p>          IconButton(</p>
+<p>            icon: const Icon(Icons.list),</p>
+<p>            onPressed: _pushSaved,</p>
+<p>            tooltip: &#39;Saved Suggestions&#39;,</p>
+<p>          ),</p>
+<p>        ],</p>
+<p>      ),              </p>
+<p>      body: ListView.builder(  // to here.</p>
+<p>      ...</p>
+<p>      ),                       // NEW</p>
+<p>    );</p>
+<p>  }</p>
+<p>  ...</p>
+<p>}</p>
+<aside class="special"><p>ヒント：ウィジェットのプロパティには、単一のウィジェット（child）を取るものと、アクションのように、角括弧（[]）で示されたウィジェット（children）の配列を取るものがあります。</p>
+</aside>
+<p>_RandomWordsStateクラスに_pushSaved()関数を追加しました。</p>
+<pre>  void _pushSaved() {
+  }</pre>
+<p class="image-container"><img alt="a114478ae13b853.png" style="width: 68.00px" src="img\\a114478ae13b853.png"></p>
+<p>アプリをホットリロードします。アプリバーにリストのアイコン <img alt="a114478ae13b853.png" style="width: 68.00px" src="img\\a114478ae13b853.png">が表示されます。このアイコンをタップしても、_pushSaved関数が空なので、まだ何もできません。</p>
+<p>次に、ルートを作成し、Navigatorのスタックにプッシュします。このアクションは、新しいルートを表示するために画面を変更します。新しいページのコンテンツは、MaterialPageRouteのbuilderプロパティの匿名関数で構築されます。</p>
+<p>Navigator.pushを呼び出し、以下のようにルートをNavigatorのスタックにプッシュします。IDEは無効なコードについて警告が出ますが、次のセクションで修正します。</p>
+<pre>void _pushSaved() {
+  Navigator.of(context).push(
+  );
+}</pre>
+<p>次に、MaterialPageRouteとそのビルダーを追加します。とりあえず、ListTileの行を生成するコードを追加します。ListTileのdivideTiles()メソッドは、各ListTileの間に水平方向の区切り線を追加します。divided変数には、便利な関数であるtoList()によってリストに変換された最終的な行が格納されています。</p>
+<p>以下のコードスニペットのように、コードを追加します。</p>
+<pre>  void _pushSaved() {
+    Navigator.of(context).push(
+      // Add lines from here...
+      MaterialPageRoute&lt;void&gt;(
+        builder: (context) {
+          final tiles = _saved.map(
+            (pair) {
+              return ListTile(
+                title: Text(
+                  pair.asPascalCase,
+                  style: _biggerFont,
+                ),
+              );
+            },
+          );
+          final divided = tiles.isNotEmpty
+              ? ListTile.divideTiles(
+                  context: context,
+                  tiles: tiles,
+                ).toList()
+              : &lt;Widget&gt;[];
+
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text(&#39;Saved Suggestions&#39;),
+            ),
+            body: ListView(children: divided),
+          );
+        },
+      ), // ...to here.
+    );
+  }
+</pre>
+<p>builderプロパティは、SavedSuggestionsという名前の新しいルートのアプリバーを含むScaffoldを返します。新しいルートの本体は、ListTilesの行を含むListViewで構成されています。各行はディバイダー(区切り線)で区切られています。</p>
+<p>アプリをホットリロードします。いくつかのお気に入りの選択を追加し、アプリバーのリストアイコンをタップします。お気に入りを含む新しいルートが表示されます。ナビゲーターはアプリバーに矢印型の戻るボタンを追加することに注意しましょう。 Navigator.popを明示的に実装する必要はありません。戻るボタンをタップすると、ホームルートに戻ります。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>iOS - Main route</p>
+</td><td colspan="1" rowspan="1"><p>iOS - Saved suggestions route</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 350.00px" src="img\\f9ae2d0302bce637.png"></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 350.00px" src="img\\498be5c9bee45893.png"></p>
+</td></tr>
+</table>
+<p>問題がありましたか？</p>
+<p>アプリが正常に動作しない場合は、以下のリンクのコードを使って元に戻すことができます。</p>
+<ul>
+<li><a href="https://github.com/flutter/codelabs/blob/master/startup_namer/step7_navigate_route/lib/main.dart" target="_blank">lib/main.dart</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Change the UI using themes" duration="0">
+        <p>このステップでは、アプリのテーマを変更します。テーマは、アプリのルック＆フィールを制御します。物理的なデバイスやエミュレータに依存するデフォルトのテーマを使用するか、オリジナルテーマをカスタマイズすることができます。</p>
+<p><a href="https://api.flutter.dev/flutter/material/ThemeData-class.html" target="_blank">ThemeData</a>クラスを設定することで、アプリのテーマ(ここではアプリ全体 UI の色やサイズなどの統一表現を表しています)を簡単に変更することができます。このアプリではデフォルトのテーマを使用していますが、アプリのプライマリカラーを白に変更します。</p>
+<p>MyAppクラスで色を変更します。</p>
+<pre>class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(          // Remove the const from here
+      title: &#39;Startup Name Generator&#39;,
+      theme: ThemeData(          // Add the 5 lines from here...
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+        ),
+      ),                         // ... to here.
+      home: const RandomWords(), // And add the const back here.
+    );
+  }
+}</pre>
+<p>アプリをホットリロードします。アプリバーも含めて背景全体が白になります。</p>
+<p>練習として、ThemeDataを使ってUIの他の部分を変更してみましょう。Materialライブラリの<a href="https://api.flutter.dev/flutter/material/Colors-class.html" target="_blank">Colors</a>クラスには多くの色定数が用意されており、それらを使って試すことができます。ホットリロードにより、UIを素早く簡単に試すことができます。</p>
+<table>
+<tr><td colspan="1" rowspan="1"><p>Android</p>
+</td><td colspan="1" rowspan="1"><p>iOS</p>
+</td></tr>
+<tr><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 486.00px" src="img\\5d4ed8aeea9e4d0a.png"></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 350.00px" src="img\\106b60ab6a6eb557.png"></p>
+</td></tr>
+</table>
+<p>問題がありましたか？</p>
+<p>もしうまく動かなければ、以下のリンクで最終的なアプリのコードを確認してください。</p>
+<ul>
+<li><a href="https://github.com/flutter/codelabs/blob/master/startup_namer/step8_themes/lib/main.dart" target="_blank">lib/main.dart</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Well done!" duration="0">
+        <p>あなたは以下のようにして、iOSとAndroidで動作するインタラクティブなFlutterアプリを書きました:</p>
+<ul>
+<li>Dartのコードを書く</li>
+<li>ホットリロードによる開発サイクルの短縮化</li>
+<li>ステートフルウィジェットを実装して、アプリにインタラクティブ性を付加する</li>
+<li>ルートの作成と、ホームルートと新ルート間の遷移ロジックの追加</li>
+<li>テーマを使ってアプリのUIを変える方法を学ぶ</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Next steps" duration="0">
+        <p>Flutter SDKの詳細については、以下のリソースをご参照ください:</p>
+<ul>
+<li><a href="https://flutter.dev/docs/development/ui/layout" target="_blank">Flutterのレイアウト</a></li>
+<li><a href="https://flutter.dev/docs/development/ui/interactive" target="_blank">Flutterアプリにインタラクティブ性を持たせる</a></li>
+<li><a href="https://flutter.dev/docs/development/ui/widgets-intro" target="_blank">ウィジェットの紹介</a></li>
+<li><a href="https://flutter.dev/docs/get-started/flutter-for/android-devs" target="_blank">Android開発者のためのFlutter</a></li>
+<li><a href="https://flutter.dev/docs/get-started/flutter-for/react-native-devs" target="_blank">React Native開発者のためのFlutter</a></li>
+<li><a href="https://flutter.dev/docs/get-started/flutter-for/web-devs" target="_blank">ウェブ開発者のためのFlutter</a></li>
+<li><a href="https://www.youtube.com/flutterdev" target="_blank">Flutter のYouTubeチャンネル</a></li>
+</ul>
+<p>その他のリソースは以下の通りです:</p>
+<ul>
+<li><a href="https://flutter.dev/docs/cookbook/" target="_blank">クックブック</a></li>
+<li><a href="https://flutter.dev/docs/resources/bootstrap-into-dart" target="_blank">BootstrapからDartへ</a></li>
+</ul>
+<p>また、<a href="https://flutter.dev/community" target="_blank">Flutterのコミュニティ</a>にも参加してください！</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

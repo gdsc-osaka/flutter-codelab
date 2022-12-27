@@ -1,0 +1,39 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2022-12-27T06:23:10Z",
+  "id": "flutter-part1",
+  "duration": 0,
+  "title": "Write your first Flutter app, part1",
+  "summary": "このコードラボでは、シンプルなモバイルFlutterアプリを作成します。オブジェクト指向のコードや、変数、ループ、条件分岐などの基本的なプログラミングの概念に精通していれば、このコードラボを修了することができます。Dartやモバイル、Webプログラミングの経験は必要ありません。",
+  "source": "1fRA5FzmO2nf2WdBRc34npa8i80KV8uMkQpaWlp8SI8Y",
+  "theme": "web",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "web"
+  ],
+  "tags": [
+    "cds17",
+    "chrome-dev-summit-2016",
+    "devfest18",
+    "gdd17",
+    "io2016",
+    "io2017",
+    "io2018",
+    "io2019",
+    "jsconfeu",
+    "kiosk",
+    "pwa-dev-summit",
+    "pwa-roadshow",
+    "tag-web",
+    "typtwd17",
+    "web"
+  ],
+  "feedback": "https://github.com/gdsc-osaka/flutter-codelab/issues",
+  "ga": "UA-99999999-1",
+  "url": "flutter-part1"
+}
