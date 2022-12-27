@@ -39,7 +39,7 @@
 <li>Stateful widget (5章で説明)を実装する方法</li>
 <li>遅延読み込みされる無限リストを作成する方法</li>
 </ul>
-<p>このコードラボの<a href="https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2/index.html?index=..%2F..%2Findex#0" target="_blank">パート2</a>では、インタラクティブな機能を追加し、アプリのテーマを変更し、新しいページ（Flutterではルートと呼ばれます）にナビゲートする機能を追加します。</p>
+<p>このコードラボの<a href="https://gdsc-osaka.github.io/flutter-codelab/flutter-part2" target="_blank">パート2</a>では、インタラクティブな機能を追加し、アプリのテーマを変更し、新しいページ（Flutterではルートと呼ばれます）にナビゲートする機能を追加します。</p>
 <h2 is-upgraded><strong>パート1で作るもの</strong></h2>
 <p>スタートアップ企業の名前案を生成するシンプルなアプリを実装します。ユーザーは名前を選択したり解除したりすることができ、最適なものを保存します。コードでは、一度に10個の名前を遅延生成します。ユーザーがスクロールすると、より多くの名前が生成されます。ユーザーがスクロールできる範囲に制限はありません。</p>
 <p>次のアニメーションGIFは、パートの完了時にアプリがどのように動作するかを示しています。</p>
@@ -62,16 +62,20 @@
       </google-codelab-step>
     
       <google-codelab-step label="Create the starter Flutter app" duration="0">
-        <p>シンプルでテンプレート化されたFlutterアプリを作成します。startup_namerという名前のFlutterプロジェクトを作成し、以下のコマンドで null safety に移行させます。</p>
+        <p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png">シンプルでテンプレート化されたFlutterアプリを作成します。startup_namerという名前のFlutterプロジェクトを作成し、以下のコマンドで null safety に移行させます。</p>
 <pre>$ flutter create startup_namer
 $ cd startup_namer</pre>
 <p>ここでやることは、Dartのコードが格納されているlib/main.dartの編集です。</p>
-<p>lib/main.dartからすべてのコードを削除し、lib/main.dartの内容を以下のコードに置き換えます。これは、画面の中央に「Hello World」を表示します。<br></p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png">lib/main.dartからすべてのコードを削除し、lib/main.dartの内容を以下のコードに置き換えます。これは、画面の中央に「Hello World」を表示します。<br></p>
 <pre>import &#39;package:flutter/material.dart&#39;;
 
-void main() =&gt; runApp(MyApp());
+void main() {
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -81,12 +85,13 @@ class MyApp extends StatelessWidget {
           title: const Text(&#39;Welcome to Flutter&#39;),
         ),
         body: const Center(
-          child: const Text(&#39;Hello World&#39;),
+          child: Text(&#39;Hello World&#39;),
         ),
       ),
     );
   }
-}</pre>
+}
+</pre>
 <pre><code></code></pre>
 <aside class="special"><p>ヒント：アプリにコードを貼り付けると、インデントがずれてしまうことがあります。以下のFlutterツールで修正することができます。</p>
 <ul>
@@ -95,7 +100,7 @@ class MyApp extends StatelessWidget {
 <li>ターミナル: <strong>flutter format &lt;filename&gt;</strong> を実行します。</li>
 </ul>
 </aside>
-<p>アプリを実行します。お使いのデバイスに応じて、Android、iOS、Webのいずれかの出力が表示されるはずです。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png">アプリを実行します。お使いのデバイスに応じて、Android、iOS、Webのいずれかの出力が表示されるはずです。</p>
 <table>
 <tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
 <tr><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 488.00px" src="img\\f9df7832965ede9f.png"></p>
@@ -104,7 +109,7 @@ class MyApp extends StatelessWidget {
 </table>
 <aside class="special"><p>ヒント：物理デバイス上で初めて実行した場合、ロードに時間がかかることがあります。その後は、ホットリロードを使って素早く更新することができます。サポートされているIDEでは、アプリが実行されている場合、Saveでもホットリロードを実行します。<strong>flutter run</strong>を使用してコンソールから直接アプリを実行している場合、<strong>r</strong>を入力するとホットリロードが実行されます。</p>
 </aside>
-<p>考察</p>
+<p><img alt="71dd22da186608e5.png" style="width: 27.00px" src="img\\71dd22da186608e5.png"> 考察</p>
 <ul>
 <li>この例では、Materialアプリを作成します。Materialは、モバイルやウェブで標準的に使用されているビジュアルデザインのための言語です。FlutterはMaterialウィジェットの豊富なセットを提供します。</li>
 <li>mainメソッドはアロー(=&gt;)表記を使用しています。一行の関数やメソッドにはアロー表記を使用します。</li>
@@ -120,7 +125,7 @@ class MyApp extends StatelessWidget {
       <google-codelab-step label="Use an external package" duration="0">
         <p>このステップでは、english_wordsというオープンソースのパッケージを使い始めます。このパッケージには、最もよく使われる数千の英単語と、いくつかの便利な関数が含まれています。</p>
 <p>english_wordsパッケージは、他の多くのオープンソースパッケージと同様に、<a href="https://pub.dev/" target="_blank">pub.dev</a>で見つけることができます。</p>
-<p>english_words パッケージをこのアプリの依存関係に追加します。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> english_words パッケージをこのアプリの依存関係に追加します。</p>
 <pre>$ flutter pub add english_words
 Resolving dependencies...
   async 2.8.1 (2.8.2 available)
@@ -130,12 +135,12 @@ Resolving dependencies...
   test_api 0.4.2 (0.4.5 available)
   vector_math 2.1.0 (2.1.1 available)
 Changed 1 dependency!</pre>
-<p>lib/main.dartで、新しいパッケージをインポートします。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> lib/main.dartで、新しいパッケージをインポートします。</p>
 <pre>import &#39;package:flutter/material.dart&#39;;
 import &#39;package:english_words/english_words.dart&#39;;  // Add this line.</pre>
 <p>文字を入力すると、Android Studioはインポートするライブラリの候補を表示します。そして、グレーで表示されたインポート文字列は、インポートされたライブラリが（今のところ）未使用であることを教えてくれます。</p>
 <p>次に、&#34;Hello World &#34;文字列を使う代わりに、english_wordsパッケージを使ってテキストを生成します。</p>
-<p>以下のように変更します。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> 以下のように変更します。</p>
 <pre>import &#39;package:english_words/english_words.dart&#39;;
 import &#39;package:flutter/material.dart&#39;;
 
@@ -165,7 +170,7 @@ class MyApp extends StatelessWidget {
 }</pre>
 <aside class="special"><p>ヒント: パスカルケース（アッパーキャメルケースとも呼ばれる）とは、最初の単語を含む、文字列の各単語が大文字で始まることを意味します。つまり、 uppercamelcase はUpperCamelCaseになります。</p>
 </aside>
-<p> アプリが実行中の場合は、ホットリロードで実行中のアプリを更新します。(コマンドラインから r を入力するとホットリロードされます。) ホットリロードをクリックするか、プロジェクトを保存するたびに、実行中のアプリにランダムに選ばれた異なる単語ペアが表示されるはずです。これは単語のペアがビルドメソッド内で生成され、MaterialAppがレンダリングを要求するたびに、またはFlutter Inspectorでプラットフォームを切り替えるときに実行されるからです。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png">  アプリが実行中の場合は、ホットリロードで実行中のアプリを更新します。(コマンドラインから r を入力するとホットリロードされます。) ホットリロードをクリックするか、プロジェクトを保存するたびに、実行中のアプリにランダムに選ばれた異なる単語ペアが表示されるはずです。これは単語のペアがビルドメソッド内で生成され、MaterialAppがレンダリングを要求するたびに、またはFlutter Inspectorでプラットフォームを切り替えるときに実行されるからです。</p>
 <table>
 <tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
 <tr><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 487.00px" src="img\\57cfbac8f2b50e5b.png"></p>
@@ -187,33 +192,36 @@ class MyApp extends StatelessWidget {
 <p>2) State クラス</p>
 <p>StatefulWidgetオブジェクトは、それ自体は不変で、破棄したり再生成したりすることができますが、Stateオブジェクトはウィジェットのライフタイム(生存期間中)にわたって状態を維持します。</p>
 <p>このステップでは、RandomWordsというステートフルなウィジェットを追加し、そのStateクラスである_RandomWordsStateを定義します。そして、既存のMyApp StatelessWidget の子ウィジェットとしてRandomWordsを使用します。</p>
-<p>StatefulWidgetのボイラープレート・コード(定型的なコード)を作成します。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> StatefulWidgetのボイラープレート・コード(定型的なコード)を作成します。</p>
 <p>このコードは、MyApp以外のファイルのどこに置いても構いませんが、この例では lib/main.dartファイルの一番下に配置しています。lib/main.dartファイルで、すべてのコードの後にカーソルを置き、Returnを数回入力して新しい行を追加します。IDEでstfulと入力すると、エディタが StatefulWidget クラスを作成するかどうかを尋ねてきます。Returnキーを押して承諾すると、2つのクラスの定型的なコードが表示され、 StatefulWidgetの名前を入力するためのカーソルが配置されます。</p>
-<p>ウィジェットの名前に RandomWords と入力します。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> ウィジェットの名前に RandomWords と入力します。</p>
 <p>以下のコードにあるように、RandomWordsウィジェットは、Stateクラスを作成する以外にはほとんど何もしません。</p>
 <p>ステートフルなウィジェットの名前としてRandomWordsを入力すると、IDEは自動的に付属のStateクラスを更新し、_RandomWordsStateと命名します。デフォルトでは、Stateクラスの名前の前にアンダースコアが付いています。識別子の前にアンダースコアを付けることで、Dart言語ではプライベート宣言(非公開)となり、Stateオブジェクトのおすすめ実装として推奨されています。</p>
-<p>また、IDEはStateクラスを自動的に更新して、State&lt;RandomWords&gt; を継承させます。これは、RandomWordsでの使用に特化した汎用のStateクラスを使用していることを示しています。アプリのロジックのほとんどがここにあり、RandomWordsウィジェットの状態を維持しています。このクラスは、生成された単語のペアのリストを保存します。このリストは、ユーザーがスクロールするたびに無限に増えていきます。また、このラボのパート2では、ユーザーがハートのアイコンの ON/OFF 切り替えすることで、リストに追加したり削除したりして、お気に入りの単語ペアを保存します。</p>
+<p>また、IDEはStateクラスを自動的に更新して、State&lt;RandomWords&gt; を継承させます。これは、RandomWordsでの使用に特化した汎用のStateクラスを使用していることを示しています。アプリのロジックのほとんどがここにあり、RandomWordsウィジェットの状態を維持しています。このクラスは、生成された単語のペアのリストを保存します。このリストは、ユーザーがスクロールするたびに無限に増えていきます。また、このラボの<a href="https://gdsc-osaka.github.io/flutter-codelab/flutter-part2" target="_blank">パート2</a>では、ユーザーがハートのアイコンの ON/OFF 切り替えすることで、リストに追加したり削除したりして、お気に入りの単語ペアを保存します。</p>
 <p>両クラスは以下のようになりました。</p>
-<p>class RandomWords extends StatefulWidget {</p>
-<p>  const RandomWords({super.key});</p>
-<p>  @override</p>
-<p>  State&lt;RandomWords&gt; createState() =&gt; _RandomWordsState();</p>
-<p>}</p>
-<p>class _RandomWordsState extends State&lt;RandomWords&gt; {</p>
-<p>  @override</p>
-<p>  Widget build(BuildContext context) {</p>
-<p>    return Container();</p>
-<p>  }</p>
-<p>}</p>
+<pre>class RandomWords extends StatefulWidget {
+  const RandomWords({super.key});
+
+  @override
+  State&lt;RandomWords&gt; createState() =&gt; _RandomWordsState();
+}
+
+class _RandomWordsState extends State&lt;RandomWords&gt; {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}</pre>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png">  _RandomWordsStateのbuild()メソッドを更新します。</p>
 <p>_RandomWordsStateのbuild()メソッドの中の return Container(); を以下の2行に置き換えます。</p>
-<p>class _RandomWordsState extends State&lt;RandomWords&gt; {</p>
-<p>  @override                                  </p>
-<p>  Widget build(BuildContext context) {</p>
-<p>    final wordPair = WordPair.random();      // NEW</p>
-<p>    return Text(wordPair.asPascalCase);      // NEW</p>
-<p>  }                                         </p>
-<p>}</p>
-<p>以下のように変更して、MyAppから単語生成コードを削除します。</p>
+<pre>class _RandomWordsState extends State&lt;RandomWords&gt; {
+  @override                                  
+  Widget build(BuildContext context) {
+    final wordPair = WordPair.random();      // NEW
+    return Text(wordPair.asPascalCase);      // NEW
+  }                                         
+}</pre>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> 以下のように変更して、MyAppから単語生成コードを削除します。</p>
 <pre>class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -233,8 +241,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }</pre>
-<p>アプリをホットリロードします。アプリは以前のように動作し、アプリをホットリロードまたは保存するたびに単語のペアが表示されます。</p>
-<p>ヒント：ホットリロードの際に、アプリの再起動が必要かもしれないという警告が表示された場合は、アプリの再起動を検討してください。誤検出の可能性もありますが、再起動することで、変更がアプリのUIに確実に反映されます。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> アプリをホットリロードします。アプリは以前のように動作し、アプリをホットリロードまたは保存するたびに単語のペアが表示されます。</p>
+<aside class="special"><p>ヒント：ホットリロードの際に、アプリの再起動が必要かもしれないという警告が表示された場合は、アプリの再起動を検討してください。誤検出の可能性もありますが、再起動することで、変更がアプリのUIに確実に反映されます。</p>
+</aside>
 <p>問題がありましたか？</p>
 <p>アプリが正常に動作していない場合は、以下のリンクのコードを使って元に戻すことができます。</p>
 <ul>
@@ -246,18 +255,18 @@ class MyApp extends StatelessWidget {
     
       <google-codelab-step label="Create an infinite scrolling ListView" duration="0">
         <p>このステップでは、_RandomWordsStateを拡張して、単語のペアのリストを生成して表示します。ユーザーがスクロールすると、（ListViewウィジェットに表示される）リストは無限に増えていきます。ListViewの builder ファクトリ・コンストラクタを使うと、必要に応じてスクロールされるときにリストビューを随時生成することができます。</p>
-<p>_RandomWordsStateクラスにいくつかの状態変数を追加します。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> _RandomWordsStateクラスにいくつかの状態変数を追加します。</p>
 <p>提案された単語のペアを保存するための_suggestionsリストを追加します。また、フォントサイズを大きくするための_biggerFont変数を追加しましょう。</p>
-<p>class _RandomWordsState extends State&lt;RandomWords&gt; {</p>
-<p>  final _suggestions = &lt;WordPair&gt;[];                 // NEW</p>
-<p>  final _biggerFont = const TextStyle(fontSize: 18); // NEW</p>
-<p>  ...</p>
-<p>}</p>
+<pre>class _RandomWordsState extends State&lt;RandomWords&gt; {
+  final _suggestions = &lt;WordPair&gt;[];                 // NEW
+  final _biggerFont = const TextStyle(fontSize: 18); // NEW
+  ...
+}</pre>
 <p>次に、_RandomWordsStateクラスに_buildSuggestions()関数を追加します。このメソッドは、提案された単語のペアを表示するListViewを構築します。</p>
 <p>ListViewクラスには、ビルダープロパティであるitemBuilderがあり、これはファクトリービルダーとコールバック関数を匿名関数として指定したものです。<strong>BuildContext</strong>と行番号 <strong>i</strong> という、2つのパラメーターが関数に渡されます。イテレータは0から始まり、関数が呼ばれるたびに増加し、提案された単語のペアごとに1つ増加します。このモデルでは、ユーザーがスクロールするたびに提案リストが増え続けます。</p>
-<p>_buildSuggestions関数の全体を追加します。</p>
-<p>_RandomWordsStateクラスに、以下の関数を追加し、必要に応じてコメントを削除します。</p>
-<pre> @override
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> _RandomWordsState のビルドメソッドを更新します。</p>
+<p>word-generation libraryを直接呼び出すのではなく、_buildSuggestions()を使用するように変更する。</p>
+<pre>  @override
   Widget build(BuildContext context) {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
@@ -277,18 +286,10 @@ class MyApp extends StatelessWidget {
       },
     );
   }</pre>
-<p>_buildSuggestions関数は、単語のペアごとに1回、_buildRowを呼び出します。この関数は、新しいペアを ListTile に表示し、<a href="https://codelabs.developers.google.com/codelabs/first-flutter-app-pt2/index.html?index=..%2F..index#0" target="_blank">パート2</a>で行をより美しくすることができます。</p>
-<p>_RandomWordsStateに _buildRow関数を追加しましょう。</p>
-<pre> Widget _buildRow(WordPair pair) {
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-    );
-  }</pre>
-<p>_RandomWordsStateの build メソッドを更新しましょう。</p>
-<p>単語生成ライブラリを直接呼び出すのではなく、_buildSuggestions()を使用するように変更しましょう。( ScaffoldはMaterial Designの基本的なビジュアルレイアウトを実装しています。)</p>
+<p>itemBuilderコールバックは、単語の組み合わせの提案ごとに1回呼び出され、各提案をListTileの行に配置します。偶数行の場合、この関数は、単語の組み合わせのための ListTile 行を追加します。奇数列の場合は、エントリを視覚的に分離するための Divider ウィジェットが追加されます。なお、小さな端末では、この区切り線が見にくい場合があります。</p>
+<aside class="special"><p>Note: The syntax i ~/ 2 divides i by 2 and returns an integer result. For example, the list [1,2,3,4,5] becomes [0,1,1,2,2]. This calculates the actual number of word pairings in the ListView,minus the divider widgets.</p>
+</aside>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png">  MyAppのビルドメソッドを更新し、タイトルを2か所変更します。</p>
 <pre>  @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -303,22 +304,7 @@ class MyApp extends StatelessWidget {
       ),
     );
   }</pre>
-<p>MyAppの build メソッドを更新し、タイトルを変更し、AppBarを削除し、ホームプロパティをRandomWordsウィジェットに変更します。</p>
-<pre>  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: &#39;Startup Name Generator&#39;,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text(&#39;Startup Name Generator&#39;),
-        ),
-        body: const Center(
-          child: RandomWords(),
-        ),
-      ),
-    );
-  }</pre>
-<p>アプリを再起動します。どこまでスクロールしても、単語ペアのリストが表示されるはずです。</p>
+<p><img alt="a3c16fc17be25f6c.png" style="width: 24.00px" src="img\\a3c16fc17be25f6c.png"> アプリを再起動します。どこまでスクロールしても、単語ペアのリストが表示されるはずです。</p>
 <table>
 <tr><td colspan="1" rowspan="1"></td><td colspan="1" rowspan="1"></td></tr>
 <tr><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 485.00px" src="img\\df2b3cb779e0020e.png"></p>
@@ -336,7 +322,7 @@ class MyApp extends StatelessWidget {
     
       <google-codelab-step label="Next steps" duration="0">
         <p>おめでとうございます！</p>
-<p>このコードラボのパート1が完了しました! このアプリを拡張したい場合は、<a href="https://gdsc-osaka.github.io/flutter-codelab/part2/" target="_blank">パート2</a>に進んで、以下のようにアプリを修正してください。</p>
+<p>このコードラボのパート1が完了しました! このアプリを拡張したい場合は、<a href="https://gdsc-osaka.github.io/flutter-codelab/flutter-part2" target="_blank">パート2</a>に進んで、以下のようにアプリを修正してください。</p>
 <ul>
 <li>インタラクティブ性の追加。</li>
 <li>新しいルートにナビゲートする機能を追加。</li>
