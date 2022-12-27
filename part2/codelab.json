@@ -1,0 +1,21 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2021-05-12T10:40:26Z",
+  "id": "write-1st-flutter-app-2",
+  "duration": 0,
+  "title": "Write your first Flutter app, part 2",
+  "summary": "",
+  "source": "1vNptLrYEc-w3e65mnitX9KLkx_hQAjkLt1ugoCisoAE",
+  "theme": "flutter",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "Flutter"
+  ],
+  "tags": [],
+  "url": "write-1st-flutter-app-2"
+}
