@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2023-05-18T14:27:44+09:00",
+  "id": "todo-app",
+  "duration": 0,
+  "title": "ToDoアプリ制作を通じて Flutter / Firebase / Riverpod を知る",
+  "summary": "この Codelab では、FlutterとFirebase及びその関連パッケージの使い方をToDoアプリ制作を通して学びます。",
+  "source": ".\\todo-app.md",
+  "theme": "",
+  "status": [
+    "draft"
+  ],
+  "category": [
+    "flutter"
+  ],
+  "tags": [
+    "android"
+  ],
+  "feedback": "https://github.com/gdsc-osaka/codelab-flutter-tutorial-todo/issues",
+  "ga": "198538794",
+  "url": "todo-app"
+}
