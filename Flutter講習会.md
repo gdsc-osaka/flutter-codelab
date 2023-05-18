@@ -34,6 +34,7 @@
 * Firestore Realtime Update
 
 ## どんなアプリを作るか
+### ドラフト
 * TODOアプリ
   Firebase Storage使えない・・・
   TODOに画像を添付できる
@@ -47,10 +48,16 @@
   Like
   返信
 
-### 企画設計
-メール/Googleを用いてAuth
-
-
+### 本企画
+* Firebase Authでログイン
+  メールとGoogle
+* HomePageでToDo一覧表示
+* ToDoには以下の情報が付いている
+  - タイトル
+  - 詳細
+  - 添付画像
+  - updatedAt, createdAt
+  - 
 
 ## Codelabの進め方
 このCodelabで勉強できることの紹介
