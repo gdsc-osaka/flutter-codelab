@@ -3,7 +3,7 @@
   "format": "html",
   "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2023-06-19T18:08:20+09:00",
+  "updated": "2023-06-19T18:13:01+09:00",
   "id": "todo-app",
   "duration": 0,
   "title": "ToDoアプリ制作を通じて Flutter / Firebase / Riverpod を知る",

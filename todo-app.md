@@ -340,7 +340,7 @@ signUp() async {
 このセクションでは、タスクのCRUD(Create, Read, Update, Delete) の方法を学びます。
 
 ### **ステップ1**: タスクの読み取り
-以下のプロバイダを作成し、
+以下のプロバイダを作成し、全てのタスクの読み取りを実装します。
 
 ```Dart
 final allTaskProvider = StreamProvider.autoDispose<List<Task>>((ref) {
@@ -372,6 +372,36 @@ final allTaskProvider = StreamProvider.autoDispose<List<Task>>((ref) {
       },
       error: (err, stack) => const Stream.empty(),
       loading: () => const Stream.empty());
+});
+```
+  
+次に、特定のタスクを取得するプロバイダを作成します。  
+
+```Dart
+final taskProvider = StreamProvider.autoDispose.family<Task, String>((ref, taskId) {
+  final user = _auth.currentUser;
+  
+  if (user == null) {
+    return const Stream.empty();
+  } else {
+    final uid = user.uid;
+    final ref = _db.collection('users').doc(uid).collection('tasks').doc(taskId);
+    final data = ref.snapshots().map((event) {
+      final data = event.data();
+
+      if (data == null) {
+        return null;
+      }
+      
+      if (data.containsKey('updatedAt') && data['updatedAt'] == null) {
+        data['updatedAt'] = Timestamp.fromDate(DateTime.now());
+      }
+      
+      return Task.fromJson(data);
+    }).where((task) => task != null).cast<Task>();
+
+    return data;
+  }
 });
 ```
 

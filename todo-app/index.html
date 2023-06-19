@@ -333,7 +333,7 @@ class FirestoreAPI {
       <google-codelab-step label="タスクデータを追加" duration="0">
         <p>このセクションでは、タスクのCRUD(Create, Read, Update, Delete) の方法を学びます。</p>
 <h2 is-upgraded><strong>ステップ1</strong>: タスクの読み取り</h2>
-<p>以下のプロバイダを作成し、</p>
+<p>以下のプロバイダを作成し、全てのタスクの読み取りを実装します。</p>
 <pre><code language="language-Dart" class="language-Dart">final allTaskProvider = StreamProvider.autoDispose&lt;List&lt;Task&gt;&gt;((ref) {
   return ref.watch(userProvider).when(
       data: (user) {
@@ -363,6 +363,33 @@ class FirestoreAPI {
       },
       error: (err, stack) =&gt; const Stream.empty(),
       loading: () =&gt; const Stream.empty());
+});
+</code></pre>
+<p>次に、特定のタスクを取得するプロバイダを作成します。</p>
+<pre><code language="language-Dart" class="language-Dart">final taskProvider = StreamProvider.autoDispose.family&lt;Task, String&gt;((ref, taskId) {
+  final user = _auth.currentUser;
+  
+  if (user == null) {
+    return const Stream.empty();
+  } else {
+    final uid = user.uid;
+    final ref = _db.collection(&#39;users&#39;).doc(uid).collection(&#39;tasks&#39;).doc(taskId);
+    final data = ref.snapshots().map((event) {
+      final data = event.data();
+
+      if (data == null) {
+        return null;
+      }
+      
+      if (data.containsKey(&#39;updatedAt&#39;) &amp;&amp; data[&#39;updatedAt&#39;] == null) {
+        data[&#39;updatedAt&#39;] = Timestamp.fromDate(DateTime.now());
+      }
+      
+      return Task.fromJson(data);
+    }).where((task) =&gt; task != null).cast&lt;Task&gt;();
+
+    return data;
+  }
 });
 </code></pre>
 
