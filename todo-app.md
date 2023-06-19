@@ -280,11 +280,6 @@ cd .\android\
 
 ### **ステップ2**: Google認証を有効化
 
-## Firestore
-Cloud Firestore はクライアントコードを書くだけで使用できるサーバーレスなデータベースです。
-
-
-## データベース設計
 ## ユーザーデータを追加
 このセクションでは、ユーザーのデータを Firestore に保存します。  
 `/lib/api/firestore_api.dart` を開き、以下のコードを追加します。  
@@ -401,5 +396,8 @@ final taskProvider = StreamProvider.autoDispose.family<Task, String>((ref, taskI
   }
 });
 ```
+
+### **ステップ2**: タスクの書き込み
+
 
 ## Storage

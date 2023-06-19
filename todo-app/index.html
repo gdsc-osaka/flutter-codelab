@@ -272,17 +272,6 @@ flutter pub get
 
       </google-codelab-step>
     
-      <google-codelab-step label="Firestore" duration="0">
-        <p>Cloud Firestore はクライアントコードを書くだけで使用できるサーバーレスなデータベースです。</p>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="データベース設計" duration="0">
-        
-
-      </google-codelab-step>
-    
       <google-codelab-step label="ユーザーデータを追加" duration="0">
         <p>このセクションでは、ユーザーのデータを Firestore に保存します。<br><code>/lib/api/firestore_api.dart</code> を開き、以下のコードを追加します。<br> このコードでは、データベースの users コレクションにユーザーの UID (User ID) を ID としたデータをセットしています。</p>
 <pre><code language="language-Dart" class="language-Dart">final _db = FirebaseFirestore.instance;
@@ -387,6 +376,7 @@ class FirestoreAPI {
   }
 });
 </code></pre>
+<h2 is-upgraded><strong>ステップ2</strong>: タスクの書き込み</h2>
 
 
       </google-codelab-step>
