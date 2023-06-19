@@ -73,8 +73,18 @@
 
       </google-codelab-step>
     
-      <google-codelab-step label="Riverpodの紹介" duration="0">
-        
+      <google-codelab-step label="Riverpod の追加" duration="0">
+        <p>Riverpod とは、Flutter 内で簡単に状態(State)を管理できるパッケージです。この Todo アプリでは、Riverpod を使用して Firebase などのデータを管理します。</p>
+<h2 is-upgraded>Riverpod の追加</h2>
+<p>以下のコマンドを実行して、アプリに Riverpod を追加します。</p>
+<pre><code language="language-Console" class="language-Console">flutter pub add riverpod
+flutter pub get
+</code></pre>
+<h2 is-upgraded>Riverpod を使ってみる</h2>
+<p>Firebase Auth から得られるユーザーデータを Riverpod で管理してみましょう。 <code>/lib/api/auth_providers.dart</code> に以下のコードを追加します。</p>
+<pre><code language="language-Dart" class="language-Dart">final userChangesProvider = StreamProvider&lt;User?&gt;((ref) =&gt; FirebaseAuth.instance.userChanges());
+</code></pre>
+
 
       </google-codelab-step>
     
@@ -258,21 +268,6 @@
 <p><code>> Task :google_sign_in_android:signingReport</code> で出力される SHA-1 と SHA-256 をメモしておきます。</p>
 <p><a href="./cmd_googlesha.png" target="_blank">sha</a></p>
 <h2 is-upgraded><strong>ステップ2</strong>: Google認証を有効化</h2>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Riverpod の追加" duration="0">
-        <p>Riverpod とは、Flutter 内で簡単に状態(State)を管理できるパッケージです。この Todo アプリでは、Riverpod を使用して Firebase などのデータを管理します。</p>
-<h2 is-upgraded>Riverpod の追加</h2>
-<p>以下のコマンドを実行して、アプリに Riverpod を追加します。</p>
-<pre><code language="language-Console" class="language-Console">flutter pub add riverpod
-flutter pub get
-</code></pre>
-<h2 is-upgraded>Riverpod を使ってみる</h2>
-<p>Firebase Auth から得られるユーザーデータを Riverpod で管理してみましょう。 <code>/lib/api/auth_providers.dart</code> に以下のコードを追加します。</p>
-<pre><code language="language-Dart" class="language-Dart">final userChangesProvider = StreamProvider&lt;User?&gt;((ref) =&gt; FirebaseAuth.instance.userChanges());
-</code></pre>
 
 
       </google-codelab-step>

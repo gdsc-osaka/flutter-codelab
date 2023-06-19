@@ -49,8 +49,24 @@ Google アカウントで [Firebase](https://console.firebase.google.com) にロ
 ### ステップ 1: 必要なコマンドライン ツールをインストールする
 
 
-## Riverpodの紹介
+## Riverpod の追加
+Riverpod とは、Flutter 内で簡単に状態(State)を管理できるパッケージです。この Todo アプリでは、Riverpod を使用して Firebase などのデータを管理します。
 
+### Riverpod の追加
+以下のコマンドを実行して、アプリに Riverpod を追加します。  
+
+```Console
+flutter pub add riverpod
+flutter pub get
+```
+
+### Riverpod を使ってみる
+Firebase Auth から得られるユーザーデータを Riverpod で管理してみましょう。
+`/lib/api/auth_providers.dart` に以下のコードを追加します。
+
+```Dart
+final userChangesProvider = StreamProvider<User?>((ref) => FirebaseAuth.instance.userChanges());
+```
 
 ## Firebase Authを追加
 Firebase Authentication を使えば、メールアドレス/パスワード認証・電話番号認証・Google認証・各SNSの認証をクライアント(アプリ)のプログラムを書くだけで実装できます。
@@ -263,25 +279,6 @@ cd .\android\
 [sha](./cmd_googlesha.png)
 
 ### **ステップ2**: Google認証を有効化
-
-## Riverpod の追加
-Riverpod とは、Flutter 内で簡単に状態(State)を管理できるパッケージです。この Todo アプリでは、Riverpod を使用して Firebase などのデータを管理します。
-
-### Riverpod の追加
-以下のコマンドを実行して、アプリに Riverpod を追加します。  
-
-```Console
-flutter pub add riverpod
-flutter pub get
-```
-
-### Riverpod を使ってみる
-Firebase Auth から得られるユーザーデータを Riverpod で管理してみましょう。
-`/lib/api/auth_providers.dart` に以下のコードを追加します。
-
-```Dart
-final userChangesProvider = StreamProvider<User?>((ref) => FirebaseAuth.instance.userChanges());
-```
 
 ## Firestore
 Cloud Firestore はクライアントコードを書くだけで使用できるサーバーレスなデータベースです。
