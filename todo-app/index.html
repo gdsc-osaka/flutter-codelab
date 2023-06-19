@@ -270,7 +270,9 @@
 flutter pub get
 </code></pre>
 <h2 is-upgraded>Riverpod を使ってみる</h2>
-<p>Firebase Auth から得られるユーザーデータを Riverpod で管理してみましょう。</p>
+<p>Firebase Auth から得られるユーザーデータを Riverpod で管理してみましょう。 <code>/lib/api/auth_providers.dart</code> に以下のコードを追加します。</p>
+<pre><code language="language-Dart" class="language-Dart">final userChangesProvider = StreamProvider&lt;User?&gt;((ref) =&gt; FirebaseAuth.instance.userChanges());
+</code></pre>
 
 
       </google-codelab-step>
@@ -329,7 +331,41 @@ class FirestoreAPI {
       </google-codelab-step>
     
       <google-codelab-step label="タスクデータを追加" duration="0">
-        
+        <p>このセクションでは、タスクのCRUD(Create, Read, Update, Delete) の方法を学びます。</p>
+<h2 is-upgraded><strong>ステップ1</strong>: タスクの読み取り</h2>
+<p>以下のプロバイダを作成し、</p>
+<pre><code language="language-Dart" class="language-Dart">final allTaskProvider = StreamProvider.autoDispose&lt;List&lt;Task&gt;&gt;((ref) {
+  return ref.watch(userProvider).when(
+      data: (user) {
+        if (user == null) {
+          return const Stream.empty();
+        } else {
+          final uid = user.uid;
+          final ref = _db.collection(&#39;users&#39;).doc(uid).collection(&#39;tasks&#39;);
+
+          final snapshots = ref.snapshots();
+
+          return snapshots.map((snapshot) {
+            final tasks = snapshot.docs
+                .map((doc) {
+                  final data = doc.data();
+
+                  if (data.containsKey(&#39;updatedAt&#39;) &amp;&amp; data[&#39;updatedAt&#39;] == null) {
+                    data[&#39;updatedAt&#39;] = Timestamp.fromDate(DateTime.now());
+                  }
+
+                  return Task.fromJson(data);
+            }).toList();
+
+            return tasks;
+          });
+        }
+      },
+      error: (err, stack) =&gt; const Stream.empty(),
+      loading: () =&gt; const Stream.empty());
+});
+</code></pre>
+
 
       </google-codelab-step>
     
