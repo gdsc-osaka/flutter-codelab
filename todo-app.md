@@ -277,6 +277,11 @@ flutter pub get
 
 ### Riverpod を使ってみる
 Firebase Auth から得られるユーザーデータを Riverpod で管理してみましょう。
+`/lib/api/auth_providers.dart` に以下のコードを追加します。
+
+```Dart
+final userChangesProvider = StreamProvider<User?>((ref) => FirebaseAuth.instance.userChanges());
+```
 
 ## Firestore
 Cloud Firestore はクライアントコードを書くだけで使用できるサーバーレスなデータベースです。
@@ -332,6 +337,42 @@ signUp() async {
 次のセクションでは、Todo のタスクを追加する方法を学びます。
 
 ## タスクデータを追加
+このセクションでは、タスクのCRUD(Create, Read, Update, Delete) の方法を学びます。
 
+### **ステップ1**: タスクの読み取り
+以下のプロバイダを作成し、
+
+```Dart
+final allTaskProvider = StreamProvider.autoDispose<List<Task>>((ref) {
+  return ref.watch(userProvider).when(
+      data: (user) {
+        if (user == null) {
+          return const Stream.empty();
+        } else {
+          final uid = user.uid;
+          final ref = _db.collection('users').doc(uid).collection('tasks');
+
+          final snapshots = ref.snapshots();
+
+          return snapshots.map((snapshot) {
+            final tasks = snapshot.docs
+                .map((doc) {
+                  final data = doc.data();
+
+                  if (data.containsKey('updatedAt') && data['updatedAt'] == null) {
+                    data['updatedAt'] = Timestamp.fromDate(DateTime.now());
+                  }
+
+                  return Task.fromJson(data);
+            }).toList();
+
+            return tasks;
+          });
+        }
+      },
+      error: (err, stack) => const Stream.empty(),
+      loading: () => const Stream.empty());
+});
+```
 
 ## Storage
